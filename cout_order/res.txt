@@ -1,0 +1,33 @@
+func return:1,a=2
+
+cout  printf  执行是从右往左扫描的，输出是按左至右顺序
+
+
+#include <iostream>  
+using namespace std;  
+  
+int g = 0;  
+template<typename T>  
+int foo()  
+{  
+    int value = ++g;  
+    return value;  
+}  
+  
+int main()  
+{  
+    cout << foo<int>() << foo<char>() << foo<float>() << foo<double>() << endl;  
+  
+    return 0;  
+}  
+
+
+计算顺序：自右至左
+输出顺序：自左至右
+
+cout在计算的时候是先计算foo<double>()的值为1，再计算foo<float>()的值为2，。。。所以输出是4321。
+
+用C的printf测了一下，也是输出4321。
+
+为什么cout和printf会以这样的方式运行的？
+----很多的编译器在函数调用的时候，会在内存中分配一个函数调用栈，函数的参数总是从右往左的顺序计算并进栈。
